@@ -1,4 +1,4 @@
-package option
+package io.github.ppaanngggg.kcharts.option
 
 enum class AxisType {
   VALUE,

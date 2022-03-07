@@ -1,4 +1,4 @@
-package option
+package io.github.ppaanngggg.kcharts.option
 
 data class Dimension(val name: String)
 

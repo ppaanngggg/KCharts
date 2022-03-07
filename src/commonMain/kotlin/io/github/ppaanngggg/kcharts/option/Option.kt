@@ -1,4 +1,4 @@
-package option
+package io.github.ppaanngggg.kcharts.option
 
 /**
  * refer from [ECharts](https://echarts.apache.org/), use [Option] to define how to draw the chart,
