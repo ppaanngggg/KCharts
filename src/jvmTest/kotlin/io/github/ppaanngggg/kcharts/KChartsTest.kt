@@ -1,6 +1,7 @@
 package io.github.ppaanngggg.kcharts
 
 import org.jetbrains.skia.*
+import java.io.File
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
@@ -24,6 +25,6 @@ class KChartsTest {
   @Test
   fun draw() {
     canvas.drawLine(0f, 0f, 99f, 99f, Paint().setARGB(255, 255, 255, 255))
-    val image = Image.makeFromBitmap(bitmap)
+    Image.makeFromBitmap(bitmap).encodeToData()!!.bytes.apply { File("test.png").writeBytes(this) }
   }
 }
