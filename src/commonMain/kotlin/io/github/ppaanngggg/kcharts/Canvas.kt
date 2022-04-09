@@ -10,4 +10,11 @@ import org.jetbrains.skia.Canvas
  */
 fun Canvas.draw(width: Int, height: Int, option: Option) {
 
+    option.xAxis.forEach {
+
+    }
+
+    option.yAxis.forEach {
+
+    }
 }

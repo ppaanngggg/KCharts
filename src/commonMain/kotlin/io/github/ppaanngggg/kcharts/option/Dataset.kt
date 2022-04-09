@@ -7,9 +7,8 @@ data class Dataset(
     val source: List<List<Any>> = emptyList()
 ) {
   fun dimension(name: String): Dataset = copy(dimensions = dimensions + Dimension(name = name))
-  fun source(row: List<Any>): Dataset {
-    val mutable = source.toMutableList()
-    mutable.add(row)
-    return copy(source = mutable)
-  }
+  @JvmName("sourceList")
+  fun source(row: List<Any>): Dataset = copy(source = source + listOf(row))
+  @JvmName("sourceListList")
+  fun source(rows: List<List<Any>>): Dataset = copy(source = source + rows)
 }

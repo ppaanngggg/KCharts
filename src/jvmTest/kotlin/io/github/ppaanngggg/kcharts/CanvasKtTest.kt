@@ -1,13 +1,11 @@
 package io.github.ppaanngggg.kcharts
 
-import io.github.ppaanngggg.kcharts.option.Axis
-import io.github.ppaanngggg.kcharts.option.AxisType
-import io.github.ppaanngggg.kcharts.option.Dataset
-import io.github.ppaanngggg.kcharts.option.Option
+import io.github.ppaanngggg.kcharts.option.*
+import org.jetbrains.skia.*
+import java.io.File
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
-import org.jetbrains.skia.*
 
 class CanvasKtTest {
 
@@ -32,7 +30,21 @@ class CanvasKtTest {
         width = this.width,
         height = this.height,
         option =
-            Option().xAxis(Axis(AxisType.CATEGORY)).yAxis(Axis(AxisType.VALUE)).dataset(Dataset()),
+            Option()
+                .xAxis(Axis(AxisType.CATEGORY))
+                .yAxis(Axis(AxisType.VALUE))
+                .dataset(
+                    Dataset()
+                        .dimension("category")
+                        .dimension("value")
+                        .source(
+                            listOf(listOf("cat1", 1), listOf("cat2", 2)),
+                        ),
+                )
+                .series(LineSeries()),
     )
+    Image.makeFromBitmap(bitmap).encodeToData()!!.bytes.apply {
+      File("images/drawXCategoryYValueOneLineSeries.png").writeBytes(this)
+    }
   }
 }

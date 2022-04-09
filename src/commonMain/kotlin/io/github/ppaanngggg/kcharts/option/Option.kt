@@ -10,6 +10,7 @@ package io.github.ppaanngggg.kcharts.option
  * [external url] https://echarts.apache.org/zh/option.html
  */
 data class Option(
+    val grids: List<Grid> = listOf(),
     val xAxis: List<Axis> = emptyList(),
     val yAxis: List<Axis> = emptyList(),
     val dataset: List<Dataset> = emptyList(),
