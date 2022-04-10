@@ -8,19 +8,17 @@ import org.jetbrains.skia.Canvas
  * 1. less flexable, try best to use the full data struct from the beginning to avoid breaking
  * change in the future;
  * 2. more builder, use builder functions to simplify usage;
- *
- * [external url] https://echarts.apache.org/zh/option.html
  */
 data class Option(
     val grids: List<Grid> = emptyList(),
     val xAxis: List<XAxis> = emptyList(),
-    val yAxis: List<Axis> = emptyList(),
+    val yAxis: List<YAxis> = emptyList(),
     val datasets: List<Dataset> = emptyList(),
     val series: List<Series> = emptyList(),
 ) {
   fun grid(grid: Grid): Option = copy(grids = this.grids + grid)
   fun xAxis(xAxis: XAxis): Option = copy(xAxis = this.xAxis + xAxis)
-  fun yAxis(axis: Axis): Option = copy(yAxis = this.yAxis + axis)
+  fun yAxis(axis: YAxis): Option = copy(yAxis = this.yAxis + axis)
   fun dataset(dataset: Dataset): Option = copy(datasets = this.datasets + dataset)
   fun series(series: Series): Option = copy(series = this.series + series)
 

@@ -10,4 +10,4 @@ enum class AxisType {
 abstract class Axis(
     val type: AxisType,
     val gridIndex: Int = 0,
-)
+) : Drawable
