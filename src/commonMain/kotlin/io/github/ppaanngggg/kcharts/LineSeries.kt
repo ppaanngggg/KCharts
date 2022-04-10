@@ -1,4 +1,4 @@
-package io.github.ppaanngggg.kcharts.option
+package io.github.ppaanngggg.kcharts
 
 data class LineSeries(
     val xAxisIndex: Int = 0,

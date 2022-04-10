@@ -1,4 +1,4 @@
-package io.github.ppaanngggg.kcharts.option
+package io.github.ppaanngggg.kcharts
 
 enum class AxisType {
   VALUE,
@@ -7,6 +7,7 @@ enum class AxisType {
   LOG,
 }
 
-data class Axis(
+abstract class Axis(
     val type: AxisType,
+    val gridIndex: Int = 0,
 )

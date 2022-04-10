@@ -1,13 +1,12 @@
 package io.github.ppaanngggg.kcharts
 
-import io.github.ppaanngggg.kcharts.option.*
 import org.jetbrains.skia.*
 import java.io.File
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
-class CanvasKtTest {
+class OptionKtTest {
 
   private val width = 120
   private val height = 80
@@ -26,23 +25,22 @@ class CanvasKtTest {
   @Test
   fun drawXCategoryYValueOneLineSeries() {
     canvas.clear(Color.WHITE)
-    canvas.draw(
-        width = this.width,
-        height = this.height,
-        option =
-            Option()
-                .xAxis(Axis(AxisType.CATEGORY))
-                .yAxis(Axis(AxisType.VALUE))
-                .dataset(
-                    Dataset()
-                        .dimension("category")
-                        .dimension("value")
-                        .source(
-                            listOf(listOf("cat1", 1), listOf("cat2", 2)),
-                        ),
-                )
-                .series(LineSeries()),
-    )
+    val option =
+        Option()
+            .grid(Grid())
+            .xAxis(XAxis(AxisType.CATEGORY))
+            .yAxis(YAxis(AxisType.VALUE))
+            .dataset(
+                Dataset()
+                    .dimension("category")
+                    .dimension("value")
+                    .source(
+                        listOf(listOf("cat1", 1), listOf("cat2", 2)),
+                    ),
+            )
+            .series(LineSeries())
+    option.draw(this.width, this.height, this.canvas)
+
     Image.makeFromBitmap(bitmap).encodeToData()!!.bytes.apply {
       File("images/drawXCategoryYValueOneLineSeries.png").writeBytes(this)
     }

@@ -1,10 +1,10 @@
-package io.github.ppaanngggg.kcharts.option
+package io.github.ppaanngggg.kcharts
 
 data class Dimension(val name: String)
 
 data class Dataset(
-    val dimensions: List<Dimension> = emptyList(),
-    val source: List<List<Any>> = emptyList()
+  val dimensions: List<Dimension> = emptyList(),
+  val source: List<List<Any>> = emptyList()
 ) {
   fun dimension(name: String): Dataset = copy(dimensions = dimensions + Dimension(name = name))
   @JvmName("sourceList")

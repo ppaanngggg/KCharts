@@ -1,4 +1,4 @@
-package io.github.ppaanngggg.kcharts.option
+package io.github.ppaanngggg.kcharts
 
 enum class SeriesType {
   LINE,
@@ -7,5 +7,5 @@ enum class SeriesType {
 }
 
 abstract class Series(
-    val type: SeriesType,
+  val type: SeriesType,
 )
