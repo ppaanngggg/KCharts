@@ -19,7 +19,7 @@ class XAxis(
     gridIndex: Int = 0,
     private val position: XAxisPosition = XAxisPosition.TOP,
 ) : Axis(type = type, gridIndex = gridIndex) {
-  override fun draw(width: Int, height: Int, canvas: Canvas, option: Option) {
+  override fun draw(width: Float, height: Float, canvas: Canvas, option: Option) {
     val grid = option.grids[gridIndex]
     grid.anchor(width, height)
   }

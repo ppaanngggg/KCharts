@@ -8,7 +8,4 @@ data class Grid(
     val right: Float = 0.1f,
     val bottom: Float = 0.1f,
 ) {
-  fun anchor(width: Int, height: Int): Point {
-    return Point(0, 0)
-  }
 }

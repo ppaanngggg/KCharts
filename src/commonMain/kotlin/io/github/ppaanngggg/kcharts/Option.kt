@@ -35,7 +35,7 @@ data class Option(
    * @param height the max height of canvas
    * @param canvas where to draw
    */
-  fun draw(width: Int, height: Int, canvas: Canvas) {
+  fun draw(width: Float, height: Float, canvas: Canvas) {
     validate()
 
     xAxis.forEach { it.draw(width, height, canvas, this) }
