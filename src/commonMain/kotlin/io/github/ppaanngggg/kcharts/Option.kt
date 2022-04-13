@@ -22,7 +22,7 @@ data class Option(
   fun dataset(dataset: Dataset): Option = copy(datasets = this.datasets + dataset)
   fun series(series: Series): Option = copy(series = this.series + series)
 
-  fun validate() {
+  private fun validate() {
     check(grids.isNotEmpty())
     check(xAxis.isNotEmpty())
     check(yAxis.isNotEmpty())
@@ -39,5 +39,6 @@ data class Option(
     validate()
 
     xAxis.forEach { it.draw(width, height, canvas, this) }
+    yAxis.forEach { it.draw(width, height, canvas, this) }
   }
 }

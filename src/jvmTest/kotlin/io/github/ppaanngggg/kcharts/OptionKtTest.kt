@@ -8,8 +8,8 @@ import kotlin.test.assertTrue
 
 class OptionKtTest {
 
-  private val width = 120
-  private val height = 80
+  private val width = 400
+  private val height = 300
   private lateinit var bitmap: Bitmap
   private lateinit var canvas: Canvas
 
@@ -35,11 +35,11 @@ class OptionKtTest {
                     .dimension("category")
                     .dimension("value")
                     .source(
-                        listOf(listOf("cat1", 1), listOf("cat2", 2)),
+                        listOf(listOf("cat1", 1), listOf("cat2", 2), listOf("cat3", 1)),
                     ),
             )
             .series(LineSeries())
-    option.draw(this.width, this.height, this.canvas)
+    option.draw(this.width.toFloat(), this.height.toFloat(), this.canvas)
 
     Image.makeFromBitmap(bitmap).encodeToData()!!.bytes.apply {
       File("images/drawXCategoryYValueOneLineSeries.png").writeBytes(this)
