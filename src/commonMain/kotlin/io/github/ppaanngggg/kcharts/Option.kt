@@ -9,13 +9,13 @@ import org.jetbrains.skia.Canvas
  * change in the future;
  * 2. more builder, use builder functions to simplify usage;
  */
-data class Option(
-    val grids: List<Grid> = emptyList(),
-    val xAxis: List<XAxis> = emptyList(),
-    val yAxis: List<YAxis> = emptyList(),
-    val datasets: List<Dataset> = emptyList(),
-    val series: List<Series> = emptyList(),
-) {
+class Option {
+  val grids: List<Grid> = emptyList()
+  val xAxis: List<XAxis> = emptyList()
+  val yAxis: List<YAxis> = emptyList()
+  val datasets: List<Dataset> = emptyList()
+  val series: List<Series> = emptyList()
+
   fun grid(grid: Grid): Option = copy(grids = this.grids + grid)
   fun xAxis(xAxis: XAxis): Option = copy(xAxis = this.xAxis + xAxis)
   fun yAxis(axis: YAxis): Option = copy(yAxis = this.yAxis + axis)

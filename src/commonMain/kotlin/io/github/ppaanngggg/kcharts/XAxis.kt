@@ -1,36 +1,27 @@
 package io.github.ppaanngggg.kcharts
 
 import org.jetbrains.skia.Canvas
-import org.jetbrains.skia.Paint
 
 enum class XAxisPosition {
   TOP,
   BOTTOM,
 }
 
-/**
- * [xAxis](https://echarts.apache.org/zh/option.html#xAxis)
- *
- * @param type axis type, line, bar, etc...
- * @param gridIndex apply to which grid
- * @property position on grid top or bottom
- */
+/** [xAxis](https://echarts.apache.org/zh/option.html#xAxis) */
 class XAxis(
-    type: AxisType,
+    type: AxisType = AxisType.CATEGORY,
     gridIndex: Int = 0,
     private val position: XAxisPosition = XAxisPosition.BOTTOM,
-) : Axis(type = type, gridIndex = gridIndex) {
+    axisLine: AxisLine = AxisLine(true),
+    splitLine: SplitLine = SplitLine(false),
+) : Axis(type = type, gridIndex = gridIndex, axisLine = axisLine, splitLine = splitLine) {
   override fun draw(width: Float, height: Float, canvas: Canvas, option: Option) {
     val bbox = option.grids[gridIndex].getBBox(width, height)
-    val paint = Paint().setStroke(true).setARGB(255, 0, 0, 0)
-    paint.isAntiAlias = false
 
-    // 1. line
     when (position) {
-      XAxisPosition.TOP -> canvas.drawLine(bbox.left, bbox.top, bbox.right, bbox.top, paint)
+      XAxisPosition.TOP -> canvas.drawLine(bbox.left, bbox.top, bbox.right, bbox.top, primaryPaint)
       XAxisPosition.BOTTOM ->
-          canvas.drawLine(bbox.left, bbox.bottom, bbox.right, bbox.bottom, paint)
+          canvas.drawLine(bbox.left, bbox.bottom, bbox.right, bbox.bottom, primaryPaint)
     }
-    // 2.
   }
 }
