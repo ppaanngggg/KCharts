@@ -1,8 +1,5 @@
 package io.github.ppaanngggg.kcharts
 
-import org.jetbrains.skia.Color
-import org.jetbrains.skia.Paint
-
 enum class AxisType {
   VALUE,
   CATEGORY,
@@ -14,26 +11,30 @@ data class AxisLine(val show: Boolean)
 
 data class SplitLine(val show: Boolean)
 
-abstract class Axis(
-    val type: AxisType,
-    val gridIndex: Int,
-    val axisLine: AxisLine,
-    val splitLine: SplitLine,
-) : Drawable {
-
-  // index in list, set by option
-  var index: Int = 0
-
-  val primaryColor = Color.makeARGB(255, 110, 112, 121)
-  val secondColor = Color.makeARGB(255, 224, 230, 241)
-  val primaryPaint: Paint = Paint()
-  val secondPaint: Paint = Paint()
-
-  init {
-    primaryPaint.isAntiAlias = false
-    primaryPaint.color = primaryColor
-
-    secondPaint.isAntiAlias = false
-    secondPaint.color = secondColor
-  }
+enum class XAxisPosition {
+  TOP,
+  BOTTOM,
 }
+
+/** [xAxis](https://echarts.apache.org/zh/option.html#xAxis) */
+data class XAxis(
+    val type: AxisType = AxisType.CATEGORY,
+    val gridIndex: Int = 0,
+    val position: XAxisPosition = XAxisPosition.BOTTOM,
+    val axisLine: AxisLine = AxisLine(true),
+    val splitLine: SplitLine = SplitLine(false),
+)
+
+enum class YAxisPosition {
+  LEFT,
+  RIGHT,
+}
+
+/** [yAxis](https://echarts.apache.org/zh/option.html#yAxis) */
+data class YAxis(
+    val type: AxisType = AxisType.VALUE,
+    val gridIndex: Int = 0,
+    val position: YAxisPosition = YAxisPosition.LEFT,
+    val axisLine: AxisLine = AxisLine(false),
+    val splitLine: SplitLine = SplitLine(true),
+)

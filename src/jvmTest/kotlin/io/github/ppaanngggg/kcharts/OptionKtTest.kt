@@ -29,7 +29,7 @@ class OptionKtTest {
         Option()
             .grid(Grid())
             .xAxis(XAxis(AxisType.CATEGORY))
-            .yAxis(YAxis(AxisType.VALUE))
+            .yAxis(YAxis(AxisType.VALUE, axisLine = AxisLine(true)))
             .dataset(
                 Dataset()
                     .dimension("category")
@@ -39,7 +39,7 @@ class OptionKtTest {
                     ),
             )
             .series(LineSeries())
-    option.draw(this.width.toFloat(), this.height.toFloat(), this.canvas)
+    canvas.drawOption(option, Rect(0f, 0f, width.toFloat(), height.toFloat()))
 
     Image.makeFromBitmap(bitmap).encodeToData()!!.bytes.apply {
       File("images/drawXCategoryYValueOneLineSeries.png").writeBytes(this)
