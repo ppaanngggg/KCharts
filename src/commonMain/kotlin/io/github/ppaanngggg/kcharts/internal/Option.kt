@@ -21,7 +21,7 @@ fun Option.getValuesOnYAxis(yAxisIndex: Int): List<Any> {
       .filter { it.yAxisIndex == yAxisIndex }
       .forEach { s ->
         val dataset = datasets[s.datasetIndex]
-        s.encode.x.forEach { values.addAll(dataset.getColumn(it)) }
+        s.encode.y.forEach { values.addAll(dataset.getColumn(it)) }
       }
   return values
 }
@@ -30,9 +30,9 @@ fun Option.draw(rect: Rect, canvas: Canvas) {
   val gridRects = this.grids.map { it.getRect(rect) }
 
   this.xAxis.mapIndexed { index, xAxis ->
-    xAxis.draw(getValuesOnXAxis(index), gridRects[xAxis.gridIndex], canvas, this)
+    xAxis.draw(getValuesOnXAxis(index), gridRects[xAxis.gridIndex], canvas)
   }
   this.yAxis.mapIndexed { index, yAxis ->
-    yAxis.draw(getValuesOnYAxis(index), gridRects[yAxis.gridIndex], canvas, this)
+    yAxis.draw(getValuesOnYAxis(index), gridRects[yAxis.gridIndex], canvas)
   }
 }
