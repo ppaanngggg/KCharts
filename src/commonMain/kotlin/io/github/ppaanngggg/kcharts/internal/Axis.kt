@@ -29,6 +29,21 @@ internal fun XAxis.draw(index: Int, rect: Rect, canvas: Canvas, option: Option) 
               gridRect.left, gridRect.bottom, gridRect.right, gridRect.bottom, primaryPaint)
     }
   }
+
+
+  // find all series using this axis
+  for (series in option.series) {
+    if (series.xAxisIndex == index) {
+
+    }
+  }
+
+  when (this.type) {
+    AxisType.CATEGORY -> {
+
+    }
+    else -> {}
+  }
 }
 
 internal fun YAxis.draw(index: Int, rect: Rect, canvas: Canvas, option: Option) {

@@ -38,7 +38,7 @@ class OptionKtTest {
                         listOf(listOf("cat1", 1), listOf("cat2", 2), listOf("cat3", 1)),
                     ),
             )
-            .series(LineSeries())
+            .series(Series(type = SeriesType.LINE))
     canvas.drawOption(option, Rect(0f, 0f, width.toFloat(), height.toFloat()))
 
     Image.makeFromBitmap(bitmap).encodeToData()!!.bytes.apply {

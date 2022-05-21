@@ -6,6 +6,14 @@ enum class SeriesType {
   SCATTER,
 }
 
-abstract class Series(
-  val type: SeriesType,
+data class Encode(
+    val x: List<String>,
+    val y: List<String>,
+)
+
+data class Series(
+    val type: SeriesType,
+    val xAxisIndex: Int = 0,
+    val yAxisIndex: Int = 0,
+    val datasetIndex: Int = 0,
 )
