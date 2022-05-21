@@ -36,9 +36,11 @@ class OptionKtTest {
                     .dimension("value")
                     .source(
                         listOf(listOf("cat1", 1), listOf("cat2", 2), listOf("cat3", 1)),
-                    ),
-            )
-            .series(Series(type = SeriesType.LINE))
+                    ))
+            .series(
+                Series(
+                    type = SeriesType.LINE,
+                    encode = Encode(x = listOf("category"), y = listOf("value"))))
     canvas.drawOption(option, Rect(0f, 0f, width.toFloat(), height.toFloat()))
 
     Image.makeFromBitmap(bitmap).encodeToData()!!.bytes.apply {

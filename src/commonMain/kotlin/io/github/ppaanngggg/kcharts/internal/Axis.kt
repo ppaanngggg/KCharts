@@ -1,10 +1,7 @@
 package io.github.ppaanngggg.kcharts.internal
 
 import io.github.ppaanngggg.kcharts.*
-import org.jetbrains.skia.Canvas
-import org.jetbrains.skia.Color
-import org.jetbrains.skia.Paint
-import org.jetbrains.skia.Rect
+import org.jetbrains.skia.*
 
 private val primaryPaint: Paint =
     Paint().also {
@@ -17,46 +14,49 @@ private val secondPaint: Paint =
       it.color = Color.makeARGB(255, 224, 230, 241)
     }
 
-internal fun XAxis.draw(index: Int, rect: Rect, canvas: Canvas, option: Option) {
-  val gridRect = option.grids[gridIndex].getRect(rect)
+internal fun XAxis.draw(values: List<Any>, rect: Rect, canvas: Canvas, option: Option) {
+  val y =
+      when (position) {
+        XAxisPosition.TOP -> rect.top
+        XAxisPosition.BOTTOM -> rect.bottom
+      }
 
   if (axisLine.show) {
-    when (position) {
-      XAxisPosition.TOP ->
-          canvas.drawLine(gridRect.left, gridRect.top, gridRect.right, gridRect.top, primaryPaint)
-      XAxisPosition.BOTTOM ->
-          canvas.drawLine(
-              gridRect.left, gridRect.bottom, gridRect.right, gridRect.bottom, primaryPaint)
-    }
+    canvas.drawLine(rect.left, y, rect.right, y, primaryPaint)
   }
 
-
-  // find all series using this axis
-  for (series in option.series) {
-    if (series.xAxisIndex == index) {
-
-    }
-  }
-
-  when (this.type) {
+  when (type) {
     AxisType.CATEGORY -> {
-
+      // remove duplicated values
+      val categories = values.distinct()
+      if (axisLine.show) {
+        var start = rect.left
+        canvas.drawLine(start, y, start, y + 5, primaryPaint)
+        val interval = rect.width / values.size
+        for (category in categories) {
+          val textLine = TextLine.Companion.make(category.toString(), Font())
+          canvas.drawTextLine(
+              textLine, start + (interval - textLine.height) / 2, y + textLine.height, primaryPaint)
+          start += interval
+          canvas.drawLine(start, y, start, y + 5, primaryPaint)
+        }
+      }
     }
-    else -> {}
+    AxisType.VALUE -> {}
+    else -> {
+      throw NotImplementedError(type.toString())
+    }
   }
 }
 
-internal fun YAxis.draw(index: Int, rect: Rect, canvas: Canvas, option: Option) {
-  val gridRect = option.grids[gridIndex].getRect(rect)
+internal fun YAxis.draw(values: List<Any>, rect: Rect, canvas: Canvas, option: Option) {
+  val x =
+      when (position) {
+        YAxisPosition.LEFT -> rect.left
+        YAxisPosition.RIGHT -> rect.right
+      }
 
-  // draw axis line, https://echarts.apache.org/zh/option.html#xAxis.axisLine
   if (axisLine.show) {
-    when (position) {
-      YAxisPosition.LEFT ->
-          canvas.drawLine(gridRect.left, gridRect.top, gridRect.left, gridRect.bottom, primaryPaint)
-      YAxisPosition.RIGHT ->
-          canvas.drawLine(
-              gridRect.right, gridRect.top, gridRect.right, gridRect.bottom, primaryPaint)
-    }
+    canvas.drawLine(x, rect.top, x, rect.bottom, primaryPaint)
   }
 }
