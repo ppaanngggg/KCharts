@@ -29,10 +29,15 @@ fun Option.getValuesOnYAxis(yAxisIndex: Int): List<Any> {
 fun Option.draw(rect: Rect, canvas: Canvas) {
   val gridRects = this.grids.map { it.getRect(rect) }
 
-  this.xAxis.mapIndexed { index, xAxis ->
-    xAxis.draw(getValuesOnXAxis(index), gridRects[xAxis.gridIndex], canvas)
-  }
-  this.yAxis.mapIndexed { index, yAxis ->
-    yAxis.draw(getValuesOnYAxis(index), gridRects[yAxis.gridIndex], canvas)
+  val xFuncs =
+      this.xAxis.mapIndexed { index, xAxis ->
+        xAxis.draw(getValuesOnXAxis(index), gridRects[xAxis.gridIndex], canvas)
+      }
+  val yFuncs =
+      this.yAxis.mapIndexed { index, yAxis ->
+        yAxis.draw(getValuesOnYAxis(index), gridRects[yAxis.gridIndex], canvas)
+      }
+  this.series.forEach {
+    it.draw(xFuncs[it.xAxisIndex], yFuncs[it.yAxisIndex], datasets[it.datasetIndex], canvas)
   }
 }

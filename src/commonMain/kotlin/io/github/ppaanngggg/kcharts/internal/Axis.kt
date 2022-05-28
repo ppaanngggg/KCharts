@@ -80,12 +80,14 @@ internal fun YAxis.draw(values: List<Any>, rect: Rect, canvas: Canvas): (Any) ->
     AxisType.VALUE -> {
       val numbers = values.map { it.float() }
       // TODO, assume max > 0 now
-      val numMax = numbers.maxOrNull()!!
+      var numMax = numbers.maxOrNull()!!
       val numInterval = autoInterval(numMax)
       var num = (numMax / numInterval).toInt()
       if (numMax % numInterval > 0) {
         num += 1
       }
+      // fix the real num max
+      numMax = num * numInterval
 
       val interval = rect.height / num
       for (i in 0..num) {
