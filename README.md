@@ -6,6 +6,15 @@ Kotlin charts library, based on [skiko](https://github.com/JetBrains/skiko), usi
 
 Want to draw Charts in [compose-jb](https://github.com/JetBrains/compose-jb)
 
+```kotlin
+  val option = Option()
+  Canvas(modifier = Modifier.fillMaxSize()) {
+    val size = this.drawContext.size
+    val canvas = this.drawContext.canvas.nativeCanvas
+    option.draw(Rect.Companion.makeWH(size.width, size.height), canvas)
+  }
+```
+
 ## Pre-Alpha Usage
 
 1. push to maven local
