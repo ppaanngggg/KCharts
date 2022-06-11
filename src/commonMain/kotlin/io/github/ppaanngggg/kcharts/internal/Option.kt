@@ -27,6 +27,8 @@ fun Option.getValuesOnYAxis(yAxisIndex: Int): List<Any> {
 }
 
 fun Option.draw(rect: Rect, canvas: Canvas) {
+  this.validate()
+
   val gridRects = this.grids.map { it.getRect(rect) }
 
   val xFuncs =

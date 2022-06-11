@@ -1,5 +1,5 @@
 plugins {
-  kotlin("multiplatform") version "1.6.21"
+  kotlin("multiplatform") version "1.7.0"
   id("maven-publish")
 }
 
@@ -26,11 +26,11 @@ var targetArch =
     }
 
 val target = "${targetOs}-${targetArch}"
-val skikoVersion = "0.7.16"
+val skikoVersion = "0.7.20"
 
 kotlin {
   jvm {
-    compilations.all { kotlinOptions.jvmTarget = "1.8" }
+    compilations.all { kotlinOptions.jvmTarget = "17" }
     withJava()
   }
   sourceSets {
