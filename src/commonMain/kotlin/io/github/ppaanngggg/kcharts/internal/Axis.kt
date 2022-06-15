@@ -15,6 +15,19 @@ private val secondPaint: Paint =
     }
 private val textPaint: Paint = Paint().also { it.color = Color.makeARGB(255, 110, 112, 121) }
 
+private fun calcNumSlotAndInterval(values: List<Any>): Pair<Int, Float> {
+  // TODO, assume max > 0 now
+  val numbers = values.map { it.float() }
+  val max = numbers.maxOrNull() ?: return Pair(1, 1f)
+
+  val interval = autoInterval(max)
+  var slot = (max / interval).toInt()
+  if (max % interval > 0) {
+    slot += 1
+  }
+  return Pair(slot, interval)
+}
+
 internal fun XAxis.draw(
     values: List<Any>,
     rect: Rect,
@@ -60,6 +73,26 @@ internal fun XAxis.draw(
       }
       return { m[it] }
     }
+    AxisType.VALUE -> {
+      val pair = calcNumSlotAndInterval(values)
+      val slot = pair.first
+      val numInterval = pair.second
+      val numMax = slot * numInterval
+
+      val interval = rect.width / slot
+      for (i in 0..slot) {
+        val x = rect.left + i * interval
+        if (axisLine.show) {
+          canvas.drawLine(x, y, x, y + 5, primaryPaint)
+          val textLine = TextLine.Companion.make((numInterval * i).toString(), Font())
+          canvas.drawTextLine(textLine, x - textLine.width / 2, y + 5 + textLine.height, textPaint)
+        }
+        if (splitLine.show && i > 0) {
+          canvas.drawLine(x, rect.top, x, rect.bottom, secondPaint)
+        }
+      }
+      return { it.float() / numMax * rect.width + rect.left }
+    }
     else -> {
       throw NotImplementedError(type.toString())
     }
@@ -79,19 +112,13 @@ internal fun YAxis.draw(values: List<Any>, rect: Rect, canvas: Canvas): (Any) ->
 
   when (type) {
     AxisType.VALUE -> {
-      val numbers = values.map { it.float() }
-      // TODO, assume max > 0 now
-      var numMax = numbers.maxOrNull()!!
-      val numInterval = autoInterval(numMax)
-      var num = (numMax / numInterval).toInt()
-      if (numMax % numInterval > 0) {
-        num += 1
-      }
-      // fix the real num max
-      numMax = num * numInterval
+      val pair = calcNumSlotAndInterval(values)
+      val slot = pair.first
+      val numInterval = pair.second
+      val numMax = slot * numInterval
 
-      val interval = rect.height / num
-      for (i in 0..num) {
+      val interval = rect.height / slot
+      for (i in 0..slot) {
         val y = rect.bottom - i * interval
         if (axisLine.show) {
           canvas.drawLine(x - 5, y, x, y, primaryPaint)

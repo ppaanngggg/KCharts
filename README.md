@@ -1,18 +1,19 @@
 # KCharts
 
-Kotlin charts library, based on [skiko](https://github.com/JetBrains/skiko), using `Option` as [ECharts](https://echarts.apache.org/zh/option.html)
+Kotlin charts library, based on [skiko](https://github.com/JetBrains/skiko), using `Option`
+as [ECharts](https://echarts.apache.org/zh/option.html)
 
 ## Purpose
 
 Want to draw Charts in [compose-jb](https://github.com/JetBrains/compose-jb)
 
 ```kotlin
-  val option = Option()
-  Canvas(modifier = Modifier.fillMaxSize()) {
-    val size = this.drawContext.size
-    val canvas = this.drawContext.canvas.nativeCanvas
-    option.draw(Rect.Companion.makeWH(size.width, size.height), canvas)
-  }
+val option = Option()
+Canvas(modifier = Modifier.fillMaxSize()) {
+  val size = this.drawContext.size
+  val canvas = this.drawContext.canvas.nativeCanvas
+  option.draw(Rect.Companion.makeWH(size.width, size.height), canvas)
+}
 ```
 
 ## Pre-Alpha Usage
@@ -22,6 +23,10 @@ Want to draw Charts in [compose-jb](https://github.com/JetBrains/compose-jb)
 
 ## Examples
 
-- Category XAxis and Line Series
+[Category XAxis and Line Series](./src/jvmTest/kotlin/io/github/ppaanngggg/kcharts/XCategoryYValueLineSeriesTest.kt)
 
-    ![](./images/drawXCategoryYValueOneLineSeries.png)
+![](./images/drawXCategoryYValueLineSeries.png)
+
+[Value XAxis and Line Series](./src/jvmTest/kotlin/io/github/ppaanngggg/kcharts/XValueYValueLineSeriesTest.kt)
+
+![](./images/drawXValueYValueLineSeries.png)

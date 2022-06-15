@@ -1,29 +1,14 @@
 package io.github.ppaanngggg.kcharts
 
-import org.jetbrains.skia.*
+import org.jetbrains.skia.Color
+import org.jetbrains.skia.Image
+import org.jetbrains.skia.Rect
 import java.io.File
-import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertTrue
 
-class OptionKtTest {
-
-  private val width = 400
-  private val height = 300
-  private lateinit var bitmap: Bitmap
-  private lateinit var canvas: Canvas
-
-  @BeforeTest
-  fun init() {
-    bitmap = Bitmap()
-    assertTrue {
-      bitmap.allocPixels(ImageInfo(width, height, ColorType.RGBA_8888, ColorAlphaType.UNPREMUL))
-    }
-    canvas = Canvas(bitmap)
-  }
-
+class XCategoryYValueLineSeriesTest : BaseTest() {
   @Test
-  fun drawXCategoryYValueOneLineSeries() {
+  fun draw() {
     canvas.clear(Color.WHITE)
     val option =
         Option()
@@ -50,7 +35,7 @@ class OptionKtTest {
     canvas.drawOption(option, Rect(0f, 0f, width.toFloat(), height.toFloat()))
 
     Image.makeFromBitmap(bitmap).encodeToData()!!.bytes.apply {
-      File("images/drawXCategoryYValueOneLineSeries.png").writeBytes(this)
+      File("images/drawXCategoryYValueLineSeries.png").writeBytes(this)
     }
   }
 }
