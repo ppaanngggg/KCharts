@@ -20,6 +20,10 @@ private fun calcNumSlotAndInterval(values: List<Any>): Pair<Int, Float> {
   val numbers = values.map { it.float() }
   val max = numbers.maxOrNull() ?: return Pair(1, 1f)
 
+  if (max == 0f) {
+    return Pair(1, 1f)
+  }
+
   val interval = autoInterval(max)
   var slot = (max / interval).toInt()
   if (max % interval > 0) {

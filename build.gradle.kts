@@ -5,7 +5,7 @@ plugins {
 
 group = "io.github.ppaanngggg"
 
-version = "0.1.3-SNAPSHOT"
+version = "0.1.5-SNAPSHOT"
 
 repositories { mavenCentral() }
 
