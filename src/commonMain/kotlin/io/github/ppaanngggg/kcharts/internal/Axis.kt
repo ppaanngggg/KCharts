@@ -2,6 +2,7 @@ package io.github.ppaanngggg.kcharts.internal
 
 import io.github.ppaanngggg.kcharts.*
 import org.jetbrains.skia.*
+import kotlin.math.round
 
 private val primaryPaint: Paint =
     Paint().also {
@@ -14,23 +15,6 @@ private val secondPaint: Paint =
       it.color = Color.makeARGB(255, 224, 230, 241)
     }
 private val textPaint: Paint = Paint().also { it.color = Color.makeARGB(255, 110, 112, 121) }
-
-private fun calcNumSlotAndInterval(values: List<Any>): Pair<Int, Float> {
-  // TODO, assume max > 0 now
-  val numbers = values.map { it.float() }
-  val max = numbers.maxOrNull() ?: return Pair(1, 1f)
-
-  if (max == 0f) {
-    return Pair(1, 1f)
-  }
-
-  val interval = autoInterval(max)
-  var slot = (max / interval).toInt()
-  if (max % interval > 0) {
-    slot += 1
-  }
-  return Pair(slot, interval)
-}
 
 internal fun XAxis.draw(
     values: List<Any>,
@@ -78,10 +62,11 @@ internal fun XAxis.draw(
       return { m[it] }
     }
     AxisType.VALUE -> {
-      val pair = calcNumSlotAndInterval(values)
-      val slot = pair.first
-      val numInterval = pair.second
-      val numMax = slot * numInterval
+      val triple = autoMinMaxInterval(values)
+      // TODO: assume all values gte 0
+      val numMax = triple.second
+      val numInterval = triple.third
+      val slot = round(numMax / numInterval).toInt()
 
       val interval = rect.width / slot
       for (i in 0..slot) {
@@ -116,10 +101,11 @@ internal fun YAxis.draw(values: List<Any>, rect: Rect, canvas: Canvas): (Any) ->
 
   when (type) {
     AxisType.VALUE -> {
-      val pair = calcNumSlotAndInterval(values)
-      val slot = pair.first
-      val numInterval = pair.second
-      val numMax = slot * numInterval
+      val triple = autoMinMaxInterval(values)
+      // TODO: assume all values gte 0
+      val numMax = triple.second
+      val numInterval = triple.third
+      val slot = round(numMax / numInterval).toInt()
 
       val interval = rect.height / slot
       for (i in 0..slot) {

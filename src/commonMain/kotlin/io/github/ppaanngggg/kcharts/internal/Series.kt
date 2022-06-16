@@ -15,7 +15,7 @@ fun Series.draw(xfun: (Any) -> Float?, yfun: (Any) -> Float?, dataset: Dataset, 
       val points = Array(xArr.size) { i -> Point(xfun(xArr[i])!!, yfun(yArr[i])!!) }
 
       when (type) {
-        SeriesType.LINE -> canvas.drawPolygon(points, Paint().also { it.color = this.color })
+        SeriesType.LINE -> canvas.drawPolygon(points, Paint().also { it.color = this.color!! })
         else -> throw NotImplementedError(type.toString())
       }
     }

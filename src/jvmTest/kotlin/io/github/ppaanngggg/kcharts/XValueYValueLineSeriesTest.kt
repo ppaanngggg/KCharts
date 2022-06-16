@@ -20,12 +20,13 @@ class XValueYValueLineSeriesTest : BaseTest() {
                     .dimension("second")
                     .dimension("value1")
                     .dimension("value2")
+                    .dimension("value3")
                     .source(
                         listOf(
-                            listOf(1, 1, 1.2),
-                            listOf(2, 2, 0.2),
-                            listOf(4, 1, 0.8),
-                            listOf(5, 1.1, 0.6),
+                            listOf(1.1, 1, 1.2, 0.1),
+                            listOf(2, 2, 0.2, 0.3),
+                            listOf(3.9, 1, 0.8, 0.9),
+                            listOf(5, 1.1, 0.6, 1.2),
                         ),
                     ))
             .series(
@@ -36,6 +37,10 @@ class XValueYValueLineSeriesTest : BaseTest() {
                 Series(
                     type = SeriesType.LINE,
                     encode = Encode(x = listOf("second"), y = listOf("value2"))))
+            .series(
+                Series(
+                    type = SeriesType.LINE,
+                    encode = Encode(x = listOf("second"), y = listOf("value3"))))
     canvas.drawOption(option, Rect(0f, 0f, width.toFloat(), height.toFloat()))
 
     Image.makeFromBitmap(bitmap).encodeToData()!!.bytes.apply {

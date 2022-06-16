@@ -22,7 +22,7 @@ class XCategoryYValueLineSeriesTest : BaseTest() {
                     .dimension("value2")
                     .source(
                         listOf(
-                            listOf("cat1", 1, 1.2), listOf("cat2", 2, 0.2), listOf("cat3", 1, 0.8)),
+                            listOf("cat1", 1, 1.2), listOf("cat2", 2.1, 0.2), listOf("cat3", 1, 0.8)),
                     ))
             .series(
                 Series(

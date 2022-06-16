@@ -7,7 +7,10 @@ group = "io.github.ppaanngggg"
 
 version = "0.1.5-SNAPSHOT"
 
-repositories { mavenCentral() }
+repositories {
+  mavenCentral()
+  maven("https://maven.pkg.jetbrains.space/public/p/compose/dev/")
+}
 
 val osName: String = System.getProperty("os.name")
 val targetOs =
@@ -20,13 +23,14 @@ val targetOs =
 
 var targetArch =
     when (val osArch: String = System.getProperty("os.arch")) {
-      "x86_64", "amd64" -> "x64"
+      "x86_64",
+      "amd64" -> "x64"
       "aarch64" -> "arm64"
       else -> error("Unsupported arch: $osArch")
     }
 
 val target = "${targetOs}-${targetArch}"
-val skikoVersion = "0.7.20"
+val skikoVersion = "0.7.22"
 
 kotlin {
   jvm {
@@ -46,8 +50,8 @@ kotlin {
     }
     val jvmTest by getting {
       dependencies {
-        implementation(kotlin("test-junit"))
         implementation(kotlin("test"))
+        implementation(kotlin("test-junit"))
       }
     }
   }
