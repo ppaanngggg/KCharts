@@ -16,21 +16,14 @@ private val secondPaint: Paint =
     }
 private val textPaint: Paint = Paint().also { it.color = Color.makeARGB(255, 110, 112, 121) }
 
-internal fun XAxis.draw(
-    values: List<Any>,
-    rect: Rect,
-    canvas: Canvas,
-): (Any) -> Float? {
+internal fun XAxis.draw(values: List<Any>, rect: Rect, canvas: Canvas): (Any) -> Float? {
   val y =
       when (position) {
         XAxisPosition.TOP -> rect.top
         XAxisPosition.BOTTOM -> rect.bottom
       }
 
-  if (axisLine.show) {
-    canvas.drawLine(rect.left, y, rect.right, y, primaryPaint)
-  }
-
+  val func: (Any) -> Float?
   when (type) {
     AxisType.CATEGORY -> {
       // remove duplicated values
@@ -59,33 +52,43 @@ internal fun XAxis.draw(
               primaryPaint)
         }
       }
-      return { m[it] }
+      func = { m[it] }
     }
     AxisType.VALUE -> {
       val triple = autoMinMaxInterval(values)
-      // TODO: assume all values gte 0
+      val numMin = triple.first
       val numMax = triple.second
       val numInterval = triple.third
-      val slot = round(numMax / numInterval).toInt()
+      val slot = round((numMax - numMin) / numInterval).toInt()
 
       val interval = rect.width / slot
       for (i in 0..slot) {
         val x = rect.left + i * interval
         if (axisLine.show) {
           canvas.drawLine(x, y, x, y + 5, primaryPaint)
-          val textLine = TextLine.Companion.make((numInterval * i).toString(), Font())
+          val textLine =
+              TextLine.Companion.make(
+                  (numMin.toBigDecimal() + numInterval.toBigDecimal() * i.toBigDecimal())
+                      .toString(),
+                  Font(),
+              )
           canvas.drawTextLine(textLine, x - textLine.width / 2, y + 5 + textLine.height, textPaint)
         }
         if (splitLine.show && i > 0) {
           canvas.drawLine(x, rect.top, x, rect.bottom, secondPaint)
         }
       }
-      return { it.float() / numMax * rect.width + rect.left }
+      func = { (it.float() - numMin) / (numMax - numMin) * rect.width + rect.left }
     }
     else -> {
       throw NotImplementedError(type.toString())
     }
   }
+
+  if (axisLine.show) {
+    canvas.drawLine(rect.left, y, rect.right, y, primaryPaint)
+  }
+  return func
 }
 
 internal fun YAxis.draw(values: List<Any>, rect: Rect, canvas: Canvas): (Any) -> Float? {
@@ -95,34 +98,41 @@ internal fun YAxis.draw(values: List<Any>, rect: Rect, canvas: Canvas): (Any) ->
         YAxisPosition.RIGHT -> rect.right
       }
 
-  if (axisLine.show) {
-    canvas.drawLine(x, rect.top, x, rect.bottom, primaryPaint)
-  }
-
+  val func: (Any) -> Float?
   when (type) {
     AxisType.VALUE -> {
       val triple = autoMinMaxInterval(values)
-      // TODO: assume all values gte 0
+      val numMin = triple.first
       val numMax = triple.second
       val numInterval = triple.third
-      val slot = round(numMax / numInterval).toInt()
+      val slot = round((numMax - numMin) / numInterval).toInt()
 
       val interval = rect.height / slot
       for (i in 0..slot) {
         val y = rect.bottom - i * interval
         if (axisLine.show) {
           canvas.drawLine(x - 5, y, x, y, primaryPaint)
-          val textLine = TextLine.Companion.make((numInterval * i).toString(), Font())
+          val textLine =
+              TextLine.Companion.make(
+                  (numMin.toBigDecimal() + numInterval.toBigDecimal() * i.toBigDecimal())
+                      .toString(),
+                  Font(),
+              )
           canvas.drawTextLine(textLine, x - 5 - textLine.width, y + textLine.height / 2, textPaint)
         }
         if (splitLine.show && i > 0) {
           canvas.drawLine(rect.left, y, rect.right, y, secondPaint)
         }
       }
-      return { rect.bottom - it.float() / numMax * rect.height }
+      func = { rect.bottom - (it.float() - numMin) / (numMax - numMin) * rect.height }
     }
     else -> {
       throw NotImplementedError(type.toString())
     }
   }
+
+  if (axisLine.show) {
+    canvas.drawLine(x, rect.top, x, rect.bottom, primaryPaint)
+  }
+  return func
 }

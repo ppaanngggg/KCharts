@@ -1,10 +1,10 @@
 package io.github.ppaanngggg.kcharts
 
+import java.io.File
+import kotlin.test.Test
 import org.jetbrains.skia.Color
 import org.jetbrains.skia.Image
 import org.jetbrains.skia.Rect
-import java.io.File
-import kotlin.test.Test
 
 class XValueYValueLineSeriesTest : BaseTest() {
   @Test
@@ -23,10 +23,11 @@ class XValueYValueLineSeriesTest : BaseTest() {
                     .dimension("value3")
                     .source(
                         listOf(
+                            listOf(-0.1, 1, 1.2, 0.1),
                             listOf(1.1, 1, 1.2, 0.1),
-                            listOf(2, 2, 0.2, 0.3),
+                            listOf(2, 2, -0.2, 0.3),
                             listOf(3.9, 1, 0.8, 0.9),
-                            listOf(5, 1.1, 0.6, 1.2),
+                            listOf(5, 1.1, 0.6, -1.2),
                         ),
                     ))
             .series(
