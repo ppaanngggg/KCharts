@@ -1,3 +1,5 @@
+**lets-plot-koltin now support skia backend**, refer to https://github.com/JetBrains/lets-plot-kotlin
+
 # KCharts
 
 Kotlin charts library, based on [skiko](https://github.com/JetBrains/skiko), using `Option`
